@@ -48,7 +48,7 @@ export function LandScape (props)
         treeMaterial.metalness = 6;
     },[])
     return (
-        <group {...props} dispose={null}>
+        <group {...props} dispose={null} scale={5}>
             <mesh
                 castShadow
                 receiveShadow
