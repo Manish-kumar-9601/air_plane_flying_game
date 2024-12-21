@@ -87,7 +87,7 @@ export const Plane = ({ modelPath = '/assets/models/airplane.glb', ...props }) =
     return (
         <group ref={groupRef}>
          
-              <OrbitControls
+              {/* <OrbitControls
                 enableZoom={false}
                 enablePan={true}
                 enableRotate={true}
@@ -95,7 +95,7 @@ export const Plane = ({ modelPath = '/assets/models/airplane.glb', ...props }) =
                 maxAzimuthAngle={Math.PI / 4}
                 minPolarAngle={Math.PI / 6}
                 maxPolarAngle={Math.PI - Math.PI / 6}
-              />
+              /> */}
             
             <group rotation-y={Math.PI} {...props} scale={4}>
                 <mesh
