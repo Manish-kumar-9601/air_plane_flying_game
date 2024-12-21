@@ -7,16 +7,15 @@ import { Plane } from "./components/plane";
 export default function App() {
   return (
     <>
-    <Canvas>
+    <Canvas style={{height:'100vh'}} >
       
     <SphereEnv/>
     <Environment background={false}  files={'/assets/texture/envmap.hdr'} />
-    <ambientLight intensity={5} />
+    <ambientLight intensity={1} />
     <PerspectiveCamera makeDefault position={[0, 10, 10]}   />
     <directionalLight position={[10, 10, 10]} intensity={1} />
     <LandScape />
     <Plane />
-          <OrbitControls/>
     </Canvas>
     </>
   )

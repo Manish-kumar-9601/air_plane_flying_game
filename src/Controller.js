@@ -1,5 +1,6 @@
-﻿import { planePosition } from "./components/plane";
-
+﻿function easeOutQuad(x) {
+    return 1 - (1 - x) * (1 - x);
+  }
 export let controls = {};
 window.addEventListener('keydown', (event) =>
 {
@@ -14,7 +15,9 @@ let maxVelocity=0.04;
 let jawVelocity = 0;
 let pitchVelocity = 0;
 let planeSpeed = 0.006;
-export const updatePlaneAxis = (x, y, z, planePosition, camera) =>
+export let turbo= 0;
+
+export const updatePlaneAxes = (x, y, z, planePosition, camera) =>
 {
     jawVelocity *=0.95;
     pitchVelocity *=0.95;
@@ -43,11 +46,15 @@ export const updatePlaneAxis = (x, y, z, planePosition, camera) =>
     {
         pitchVelocity += -0.02;
     }
-    if (controls['shift'])
-        {
-            planePosition.add(z.clone().multiplyScalar(-planeSpeed-0.04))
-        }
- 
+if(controls['r']){
+    jawVelocity=0;
+    pitchVelocity=0;
+    turbo=0;
+    x.set(1,0,0);
+    y.set(0,1,0);
+    z.set(0,0,1);
+    planePosition.set(0, 20, 25);
+}
     // if(x && y && z){
  
         x.applyAxisAngle(z, jawVelocity);
@@ -59,7 +66,17 @@ export const updatePlaneAxis = (x, y, z, planePosition, camera) =>
         x.normalize();
         y.normalize();
         z.normalize();
-        
-        planePosition.add(z.clone().multiplyScalar(-planeSpeed))
+        if (controls['shift'])
+            {
+                 turbo +=0.25;
+            }
+            else {
+                turbo *=0.95;
+            }
+            turbo=Math.min(Math.max(turbo,0),1);
+            let turboSpeed = easeOutQuad(turbo) * 0.02;
+            camera.fov=45+turboSpeed*900
+            camera.updateProjectionMatrix();
+        planePosition.add(z.clone().multiplyScalar(-planeSpeed-turboSpeed))
     // }
 }
