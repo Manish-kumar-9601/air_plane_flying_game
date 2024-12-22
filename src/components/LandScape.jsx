@@ -78,9 +78,9 @@ export function LandScape (props)
 
         // Enhance border material
         const borderMaterial = materials['Material.010'];
-        borderMaterial.envMapIntensity = 0.8;
-        borderMaterial.roughness = 0.4;
-        borderMaterial.metalness = 0.6;
+        borderMaterial.envMapIntensity = 1.8;
+        borderMaterial.roughness = 1.4;
+        borderMaterial.metalness = 1.6;
     }, []);
 
     // Animate water
@@ -99,10 +99,10 @@ export function LandScape (props)
     return (
         <>
             <RigidBody   type='fixed' collider='trimesh'  >
-
+            <directionalLight position={[110, 110, 110]} intensity={2} />
                 {/* Environment and atmospheric effects */}
                 <Environment preset="sunset" />
-                <fog attach="fog" args={['#90b7ff', 10, 100]} />
+                <fog attach="fog" args={['#92b7ff', 10, 100]} />
 
                 <group {...props} dispose={null} scale={10}>
                     {/* Main landscape */}
