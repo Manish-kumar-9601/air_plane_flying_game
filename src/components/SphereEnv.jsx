@@ -5,7 +5,7 @@ export const SphereEnv=()=>{
     const map=useTexture('/assets/texture/envmap.jpg')
     return(
     <mesh>
-  <sphereGeometry args={[60, 70, 70]} />
+  <sphereGeometry args={[80, 100, 100]} />
   <meshBasicMaterial 
   side={BackSide} 
   map={map} />

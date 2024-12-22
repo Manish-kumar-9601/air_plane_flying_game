@@ -18,7 +18,7 @@ let pitchVelocity = 0;
 let planeSpeed = 0.006;
 export let turbo = 0;
 
-export const updatePlaneAxes = (x, y, z, planePosition, camera) =>
+export const updatePlaneAxis = (x, y, z, planePosition, camera) =>
 {
     jawVelocity *= 0.95;
     pitchVelocity *= 0.95;
@@ -33,19 +33,21 @@ export const updatePlaneAxes = (x, y, z, planePosition, camera) =>
     }
     if (controls['a'] || controls['arrowleft'])
     {
-        jawVelocity += 0.01;
+        jawVelocity += 0.005;
     }
     if (controls['d'] || controls['arrowright'])
     {
-        jawVelocity += -0.01;
+        jawVelocity += -0.005;
     }
     if (controls['w'] || controls['arrowup'])
     {
-        pitchVelocity += 0.01;
+        pitchVelocity += 0.005;
+        turbo *= 0.095;
+
     }
     if (controls['s'] || controls['arrowdown'])
     {
-        pitchVelocity += -0.01;
+        pitchVelocity += -0.005;
     }
     if (controls['r'])
     {
@@ -74,7 +76,7 @@ export const updatePlaneAxes = (x, y, z, planePosition, camera) =>
     }
     else
     {
-        turbo *= 0.95;
+        turbo *= .95;
     }
     turbo = Math.min(Math.max(turbo, 0), 1);
     let turboSpeed = easeOutQuad(turbo) * 0.02;

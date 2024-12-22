@@ -98,7 +98,7 @@ export function LandScape (props)
 
     return (
         <>
-            <RigidBody   type='fixed' collider='trimesh'  >
+           
             <directionalLight position={[110, 110, 110]} intensity={2} />
                 {/* Environment and atmospheric effects */}
                 <Environment preset="sunset" />
@@ -128,11 +128,13 @@ export function LandScape (props)
                             receiveShadow
                             geometry={nodes.trees_light.geometry}
                             material={materials['Material.008']}
+                            scale={.8}
+                             
                         />
                     </Float>
 
                     {/* Walls */}
-                    <mesh
+                    {/* <mesh
                         castShadow
                         receiveShadow
                         geometry={nodes.walls.geometry}
@@ -140,7 +142,7 @@ export function LandScape (props)
                         position={[0, 3, -5.109]}
                         rotation={[Math.PI / 2, 0, 0]}
                         scale={[5, 1, 3]}
-                    />
+                    /> */}
 
                     {/* Animated water bodies */}
                     {['water', 'water1', 'water2'].map((waterName, index) => (
@@ -178,10 +180,10 @@ export function LandScape (props)
                         width={20}
                         depth={1.5}
                         segments={20}
-                        position={[0, 15, -10]}
+                        position={[0, 10, -10]}
                     />
                 </group>
-            </RigidBody>
+           
         </>
     );
 }
