@@ -1,9 +1,10 @@
 ﻿// Plane.jsx
 import React, { useRef, useMemo } from 'react';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { OrbitControls, useGLTF, useKeyboardControls } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Matrix4, Vector3, Vector4, Quaternion } from 'three';
 import { updatePlaneAxes } from '../Controller';
+import { RigidBody } from '@react-three/rapier';
 
 const delayedRotMatrix = new Matrix4();
 const delayedQuaternion = new Quaternion();
@@ -19,11 +20,13 @@ const HELIX_ROTATION_SPEED = 1;
 const CAMERA_SMOOTHING = 0.175; // Camera interpolation factor
 
 export const Plane = ({ modelPath = '/assets/models/airplane.glb', ...props }) => {
+    const [, get] = useKeyboardControls();
+const { forward, backward, left, right, turbo ,reset} = get()
     const groupRef = useRef();
     const helixRef = useRef();
-    
+    const rigidBodyRef=useRef()
     const { nodes, materials } = useGLTF(modelPath);
-    
+    console.log( forward, backward, left, right, turbo ,reset);
     const axes = useMemo(() => ({
         x: new Vector3(1, 0, 0),
         y: new Vector3(0, 1, 0),
@@ -39,8 +42,8 @@ export const Plane = ({ modelPath = '/assets/models/airplane.glb', ...props }) =
         }
         
         // Update plane axes and position
-        updatePlaneAxes(axes.x, axes.y, axes.z, planePosition, camera);
-        
+        updatePlaneAxes(axes.x, axes.y, axes.z, planePosition, camera, forward, backward, left, right, turbo ,reset );
+         
         // Calculate plane transformation matrix
         const rotationMatrix = new Matrix4().makeBasis(axes.x, axes.y, axes.z);
         const transformMatrix = new Matrix4()
@@ -85,6 +88,8 @@ export const Plane = ({ modelPath = '/assets/models/airplane.glb', ...props }) =
     });
     
     return (
+        <RigidBody colliders={false} lockRotations ref={rigidBodyRef}>
+
         <group ref={groupRef}>
          
               {/* <OrbitControls
@@ -95,7 +100,7 @@ export const Plane = ({ modelPath = '/assets/models/airplane.glb', ...props }) =
                 maxAzimuthAngle={Math.PI / 4}
                 minPolarAngle={Math.PI / 6}
                 maxPolarAngle={Math.PI - Math.PI / 6}
-              /> */}
+                /> */}
             
             <group rotation-y={Math.PI} {...props} scale={4}>
                 <mesh
@@ -103,22 +108,23 @@ export const Plane = ({ modelPath = '/assets/models/airplane.glb', ...props }) =
                     receiveShadow
                     geometry={nodes.supports.geometry}
                     material={materials['Material.004']}
-                />
+                    />
                 <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.chassis.geometry}
                     material={materials['Material.005']}
-                />
+                    />
                 <mesh
                     ref={helixRef}
                     castShadow
                     receiveShadow
                     geometry={nodes.helix.geometry}
                     material={materials['Material.005']}
-                />
+                    />
             </group>
         </group>
+                    </RigidBody>
     );
 };
 
