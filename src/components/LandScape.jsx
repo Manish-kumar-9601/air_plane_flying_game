@@ -16,7 +16,7 @@ import { RigidBody } from '@react-three/rapier';
 export function LandScape (props)
 {
     // const { nodes, materials } = useGLTF('/assets/models/scene.glb');
-    const { nodes, materials } = useGLTF('public/assets/models/scene.glb');
+    const { nodes, materials } = useGLTF('/assets/models/scene.glb');
     const waterRefs = useRef([]);
 
     // Enhanced materials with improved visual properties
